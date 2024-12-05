@@ -1,17 +1,30 @@
-# 1665806-Programmez-en-oriente-objet-PHP
+<?php
 
-## TP P3C2
+/*
+ * This file is part of the OpenClassRoom PHP Object Course.
+ *
+ * (c) Grégoire Hébert <contact@gheb.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
-Utilisez la fonction `spl_autoload_register` pour charger automatiquement vos classes, et répartissez-les dans une arborescence correspondant à vos espaces de noms afin de respecter PSR-4.
+declare(strict_types=1);
 
-## Correction
-
-Toujours dans l'idée de ne pas me fermer à des évolutions futures, j'ai choisi de placer l'ensemble de mes classes dans un répertoire source nommé `src`. Pour faire fonctionner le chargement automatisé, j'ai considéré `App` comme un Alias de `src`.
-
-```php
-spl_autoload_register(static function(string $fqcn){
-    // je remplace App par src et les \ par des /.
-    $path = sprintf('%s.php', str_replace(['App','\\'], ['src', '/'], $fqcn));
-    require_once ($path);
+spl_autoload_register(static function (string $fqcn): void {
+    $path = sprintf('%s.php', str_replace(['App', '\\'], ['src', '/'], $fqcn));
+    require_once $path;
 });
-```
+
+use App\MatchMaker\Lobby;
+use App\MatchMaker\Player\Player;
+
+$greg = new Player('greg');
+$jade = new Player('jade');
+
+$lobby = new Lobby();
+$lobby->addPlayers($greg, $jade);
+
+var_dump($lobby->findOponents($lobby->queuingPlayers[0]));
+
+exit(0);
