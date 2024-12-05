@@ -18,5 +18,3 @@ abstract class AbstractPlayer
 
     abstract public function updateRatioAgainst(self $player, int $result): void;
 }
-
-
